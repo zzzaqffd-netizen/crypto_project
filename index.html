@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="uk" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPX Platform — Економіка та Кабінет</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0b0f19',
+                            800: '#111827',
+                            700: '#1f2937',
+                            600: '#374151',
+                        },
+                        brand: {
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            400: '#818cf8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-dark-900 text-gray-100 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Навігація -->
+    <header class="border-b border-dark-700 bg-dark-800/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-emerald-400 flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-brand-500/30">
+                    M
+                </div>
+                <div>
+                    <span class="text-lg font-bold tracking-tight">MPX Protocol</span>
+                    <span class="block text-xs text-emerald-400 font-medium">● Пул забезпечено ліквідністю</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="hidden md:flex flex-col text-right">
+                    <span class="text-xs text-gray-400">Ціна токена MPX</span>
+                    <span class="text-sm font-semibold text-emerald-400">$1.00 USD</span>
+                </div>
+                <button class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-lg shadow-brand-600/20 flex items-center space-x-2">
+                    <i data-lucide="wallet" class="w-4 h-4"></i>
+                    <span>Підключити гаманець</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основний контент -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow">
+        
+        <!-- Верхні картки статистики -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="bg-dark-800 border border-dark-700 rounded-2xl p-5 shadow-sm">
+                <div class="flex items-center justify-between text-gray-400 mb-2">
+                    <span class="text-xs uppercase tracking-wider font-semibold">Ціна MPX</span>
+                    <i data-lucide="trending-up" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <div class="text-2xl font-bold text-white">$1.00</div>
+                <div class="text-xs text-gray-400 mt-1">Пул ÷ Монети в обігу</div>
+            </div>
+
+            <div class="bg-dark-800 border border-dark-700 rounded-2xl p-5 shadow-sm">
+                <div class="flex items-center justify-between text-gray-400 mb-2">
+                    <span class="text-xs uppercase tracking-wider font-semibold">Пул забезпечення</span>
+                    <i data-lucide="shield-check" class="w-5 h-5 text-brand-400"></i>
+                </div>
+                <div class="text-2xl font-bold text-white">$200.00</div>
+                <div class="text-xs text-emerald-400 mt-1">100% реальна ліквідність</div>
+            </div>
+
+            <div class="bg-dark-800 border border-dark-700 rounded-2xl p-5 shadow-sm">
+                <div class="flex items-center justify-between text-gray-400 mb-2">
+                    <span class="text-xs uppercase tracking-wider font-semibold">Монет в обігу</span>
+                    <i data-lucide="coins" class="w-5 h-5 text-amber-400"></i>
+                </div>
+                <div class="text-2xl font-bold text-white">200 MPX</div>
+                <div class="text-xs text-gray-400 mt-1">Загальна емісія</div>
+            </div>
+
+            <div class="bg-dark-800 border border-dark-700 rounded-2xl p-5 shadow-sm">
+                <div class="flex items-center justify-between text-gray-400 mb-2">
+                    <span class="text-xs uppercase tracking-wider font-semibold">Ваш баланс</span>
+                    <i data-lucide="user" class="w-5 h-5 text-blue-400"></i>
+                </div>
+                <div class="text-2xl font-bold text-white">0.00 MPX</div>
+                <div class="text-xs text-gray-400 mt-1">≈ $0.00 USD</div>
+            </div>
+        </div>
+
+        <!-- Інтерфейс кабінету (Вкладки) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Ліва колонка: Обмін (Купівля / Продаж) -->
+            <div class="lg:col-span-1 bg-dark-800 border border-dark-700 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+                <div>
+                    <!-- Перемикач Покупка / Продаж -->
+                    <div class="flex bg-dark-900 p-1 rounded-xl mb-6 border border-dark-700">
+                        <button id="tab-buy" onclick="switchTab('buy')" class="flex-1 py-2 rounded-lg text-sm font-semibold bg-brand-600 text-white transition shadow">Купити</button>
+                        <button id="tab-sell" onclick="switchTab('sell')" class="flex-1 py-2 rounded-lg text-sm font-semibold text-gray-400 hover:text-white transition">Продати</button>
+                    </div>
+
+                    <!-- Форма Покупки -->
+                    <div id="form-buy" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">Ви витрачаєте (USDT)</label>
+                            <div class="relative">
+                                <input type="number" placeholder="0.00" class="w-full bg-dark-900 border border-dark-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500 font-mono">
+                                <span class="absolute right-4 top-3 text-sm text-gray-400 font-medium">USDT</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-900/50 p-3 rounded-xl border border-dark-700/50 text-xs space-y-1.5 text-gray-400">
+                            <div class="flex justify-between">
+                                <span>Комісія:</span>
+                                <span class="text-gray-200">12%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>→ В пул забезпечення:</span>
+                                <span class="text-emerald-400 font-medium">8%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>→ Засновникам та мережі:</span>
+                                <span class="text-brand-400 font-medium">4% (50/50)</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">Ви отримаєте (приблизно)</label>
+                            <div class="relative">
+                                <input type="text" readonly value="0.00" class="w-full bg-dark-900 border border-dark-700 rounded-xl px-4 py-3 text-emerald-400 font-mono font-bold">
+                                <span class="absolute right-4 top-3 text-sm text-emerald-400 font-medium">MPX</span>
+                            </div>
+                        </div>
+
+                        <button class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 rounded-xl transition shadow-lg shadow-emerald-600/20">
+                            Купити MPX
+                        </button>
+                    </div>
+
+                    <!-- Форма Продажу -->
+                    <div id="form-sell" class="space-y-4 hidden">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">Ви продаєте (MPX)</label>
+                            <div class="relative">
+                                <input type="number" placeholder="0.00" class="w-full bg-dark-900 border border-dark-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500 font-mono">
+                                <span class="absolute right-4 top-3 text-sm text-gray-400 font-medium">MPX</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-900/50 p-3 rounded-xl border border-dark-700/50 text-xs space-y-1.5 text-gray-400">
+                            <div class="flex justify-between">
+                                <span>Комісія:</span>
+                                <span class="text-gray-200">18%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>→ В пул ліквідності:</span>
+                                <span class="text-emerald-400 font-medium">13%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>→ Засновникам та мережі:</span>
+                                <span class="text-brand-400 font-medium">5% (50/50)</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">Ви отримаєте (USDT)</label>
+                            <div class="relative">
+                                <input type="text" readonly value="0.00" class="w-full bg-dark-900 border border-dark-700 rounded-xl px-4 py-3 text-emerald-400 font-mono font-bold">
+                                <span class="absolute right-4 top-3 text-sm text-emerald-400 font-medium">USDT</span>
+                            </div>
+                        </div>
+
+                        <button class="w-full bg-rose-600 hover:bg-rose-500 text-white font-semibold py-3 rounded-xl transition shadow-lg shadow-rose-600/20">
+                            Продати MPX
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-dark-700 text-xs text-gray-500 text-center">
+                    Миттєва ліквідність забезпечена смарт-контрактом пулу
+                </div>
+            </div>
+
+            <!-- Права колонка: Депонирування та Маркетинг -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- Блок Депонирування (Дивиденды) -->
+                <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-bold flex items-center space-x-2">
+                            <i data-lucide="piggy-bank" class="w-5 h-5 text-emerald-400"></i>
+                            <span>Депонирування активу (Дивіденди)</span>
+                        </h2>
+                        <span class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full font-medium border border-emerald-500/20">Пасивний дохід</span>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6">Заморозьте свої MPX токени на визначений термін та отримуйте прибуток згідно з річною ставкою.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <!-- Тариф 30 днів -->
+                        <div class="border border-dark-700 bg-dark-900/60 rounded-xl p-4 flex flex-col justify-between hover:border-brand-500 transition cursor-pointer group">
+                            <div>
+                                <div class="text-xs text-gray-400 font-semibold uppercase">Стандарт</div>
+                                <div class="text-2xl font-bold text-white mt-1">35% <span class="text-xs font-normal text-gray-400">річних</span></div>
+                                <div class="text-xs text-emerald-400 mt-2 font-medium">≈ 2.91% за 30 днів</div>
+                            </div>
+                            <div class="mt-6 pt-3 border-t border-dark-700/60 flex items-center justify-between text-xs text-gray-400">
+                                <span>Термін: 30 днів</span>
+                                <span class="text-brand-400 group-hover:translate-x-1 transition">Обрати →</span>
+                            </div>
+                        </div>
+
+                        <!-- Тариф 90 днів -->
+                        <div class="border border-brand-500 bg-brand-500/5 rounded-xl p-4 flex flex-col justify-between relative shadow-lg shadow-brand-500/5">
+                            <div class="absolute -top-2.5 right-4 bg-brand-600 text-white text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider">Популярний</div>
+                            <div>
+                                <div class="text-xs text-brand-400 font-semibold uppercase">Оптимальний</div>
+                                <div class="text-2xl font-bold text-white mt-1">42% <span class="text-xs font-normal text-gray-400">річних</span></div>
+                                <div class="text-xs text-emerald-400 mt-2 font-medium">≈ 10.5% за 90 днів</div>
+                            </div>
+                            <div class="mt-6 pt-3 border-t border-dark-700/60 flex items-center justify-between text-xs text-gray-400">
+                                <span>Термін: 90 днів</span>
+                                <span class="text-brand-400">Обрати →</span>
+                            </div>
+                        </div>
+
+                        <!-- Тариф 180 днів -->
+                        <div class="border border-dark-700 bg-dark-900/60 rounded-xl p-4 flex flex-col justify-between hover:border-brand-500 transition cursor-pointer group">
+                            <div>
+                                <div class="text-xs text-gray-400 font-semibold uppercase">Максимальний</div>
+                                <div class="text-2xl font-bold text-white mt-1">49% <span class="text-xs font-normal text-gray-400">річних</span></div>
+                                <div class="text-xs text-emerald-400 mt-2 font-medium">≈ 24.5% за 180 днів</div>
+                            </div>
+                            <div class="mt-6 pt-3 border-t border-dark-700/60 flex items-center justify-between text-xs text-gray-400">
+                                <span>Термін: 180 днів</span>
+                                <span class="text-brand-400 group-hover:translate-x-1 transition">Обрати →</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-3">
+                        <input type="number" placeholder="Кількість MPX для депозиту" class="flex-1 bg-dark-900 border border-dark-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500 font-mono text-sm">
+                        <button class="bg-brand-600 hover:bg-brand-500 text-white font-semibold px-6 py-3 rounded-xl transition text-sm shadow-lg shadow-brand-600/20">
+                            Створити депозит
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Реферальна мережа та маркетинг -->
+                <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-bold flex items-center space-x-2">
+                            <i data-lucide="share-2" class="w-5 h-5 text-brand-400"></i>
+                            <span>Реферальна програма (5 рівнів)</span>
+                        </h2>
+                        <span class="text-xs text-gray-400">Комісії розподіляються 50/50 з мережею</span>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6">Запрошуйте учасників та отримуйте відсоток від комісій покупки/продажу вашої команди.</p>
+
+                    <!-- Рівні маркетингу -->
+                    <div class="grid grid-cols-5 gap-2 mb-6">
+                        <div class="bg-dark-900 border border-dark-700 p-3 rounded-xl text-center">
+                            <div class="text-xs text-gray-400">1 Рівень</div>
+                            <div class="text-lg font-bold text-emerald-400 mt-1">50%</div>
+                        </div>
+                        <div class="bg-dark-900 border border-dark-700 p-3 rounded-xl text-center">
+                            <div class="text-xs text-gray-400">2 Рівень</div>
+                            <div class="text-lg font-bold text-emerald-400 mt-1">30%</div>
+                        </div>
+                        <div class="bg-dark-900 border border-dark-700 p-3 rounded-xl text-center">
+                            <div class="text-xs text-gray-400">3 Рівень</div>
+                            <div class="text-lg font-bold text-emerald-400 mt-1">10%</div>
+                        </div>
+                        <div class="bg-dark-900 border border-dark-700 p-3 rounded-xl text-center">
+                            <div class="text-xs text-gray-400">4 Рівень</div>
+                            <div class="text-lg font-bold text-emerald-400 mt-1">5%</div>
+                        </div>
+                        <div class="bg-dark-900 border border-dark-700 p-3 rounded-xl text-center">
+                            <div class="text-xs text-gray-400">5 Рівень</div>
+                            <div class="text-lg font-bold text-emerald-400 mt-1">5%</div>
+                        </div>
+                    </div>
+
+                    <!-- Реферальне посилання -->
+                    <div class="flex items-center space-x-3 bg-dark-900 border border-dark-700 p-2 rounded-xl">
+                        <input type="text" readonly value="https://mpx.protocol/ref/danylo_viier" class="bg-transparent flex-1 px-3 text-sm text-gray-300 font-mono focus:outline-none">
+                        <button class="bg-dark-700 hover:bg-dark-600 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition">
+                            Копіювати
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Футер -->
+    <footer class="border-t border-dark-700 bg-dark-800/30 mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 space-y-2 sm:space-y-0">
+            <div>© 2026 MPX Protocol. Усі права захищені. Прозоре забезпечення ліквідності.</div>
+            <div class="flex space-x-4">
+                <a href="#" class="hover:text-gray-300">Документація</a>
+                <a href="#" class="hover:text-gray-300">Смарт-контракт</a>
+                <a href="#" class="hover:text-gray-300">Підтримка</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Ініціалізація іконок Lucide -->
+    <script>
+        lucide.createIcons();
+
+        // Простий перемикач вкладок Купівля/Продаж
+        function switchTab(type) {
+            const buyTab = document.getElementById('tab-buy');
+            const sellTab = document.getElementById('tab-sell');
+            const buyForm = document.getElementById('form-buy');
+            const sellForm = document.getElementById('form-sell');
+
+            if (type === 'buy') {
+                buyTab.className = "flex-1 py-2 rounded-lg text-sm font-semibold bg-brand-600 text-white transition shadow";
+                sellTab.className = "flex-1 py-2 rounded-lg text-sm font-semibold text-gray-400 hover:text-white transition";
+                buyForm.classList.remove('hidden');
+                sellForm.classList.add('hidden');
+            } else {
+                sellTab.className = "flex-1 py-2 rounded-lg text-sm font-semibold bg-rose-600 text-white transition shadow";
+                buyTab.className = "flex-1 py-2 rounded-lg text-sm font-semibold text-gray-400 hover:text-white transition";
+                sellForm.classList.remove('hidden');
+                buyForm.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
